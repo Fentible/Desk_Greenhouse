@@ -132,14 +132,16 @@ void handler(void)
 	if(temp_value > max_temp && humidity_value > max_humidity) {
 		temp_diff =  ( abs(temp_value - max_temp) / ((temp_value + max_temp) / 2.0) ) * 100; // temp temp_difference
 		humid_diff =  ( abs(humidity_value - max_humidity) / ((humidity_value + max_humidity) / 2.0) ) * 100; // temp temp_difference
-		if((0 <= temp_diff && temp_diff < 25) || (0 <= humid_diff && humid_diff < 25)) { fan_speed = SLOW; }
-		else if((25 <= temp_diff && temp_diff < 50) || (25 <= humid_diff && humid_diff < 50)) { fan_speed = MED; }
-		else if((50 <= temp_diff && temp_diff < 75) || (50 <= humid_diff && humid_diff < 75)) { fan_speed = FAST; }
+		
+		if     (( 0 <= temp_diff && temp_diff < 25)   || (0 <= humid_diff && humid_diff < 25))    { fan_speed = SLOW;   }
+		else if((25 <= temp_diff && temp_diff < 50)   || (25 <= humid_diff && humid_diff < 50))   { fan_speed = MED;    }
+		else if((50 <= temp_diff && temp_diff < 75)   || (50 <= humid_diff && humid_diff < 75))   { fan_speed = FAST;   }
 		else if((75 <= temp_diff && temp_diff <= 100) || (75 <= humid_diff && humid_diff <= 100)) { fan_speed = F_FAST; }
+		
 	} else { fan_speed = OFF; }
 
 	if(soilMoistureValue == 0x00) { 
-		pump_time = 20000; 
+		pump_time = 5000; 
 	}
 	//if(pump_tick-- == 0) {
 	pump_start(pump_time);
@@ -307,10 +309,10 @@ void sensors(void)
 		if(sensor_num == 3) { // if all sensors info retrieved, update screen
 			HAL_NVIC_DisableIRQ(EXTI9_5_IRQn);
 			//SER_Busy();
+			handler();		
 			GLCD_ClearScreen();  
 			draw_top_bar();
 			GLCD_SetBackgroundColor(GLCD_COLOR_WHITE);  
-			handler();			
 			draw_sensors();
 			sensor_num = 0;
 			HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);

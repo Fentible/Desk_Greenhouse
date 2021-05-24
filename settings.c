@@ -41,9 +41,9 @@ extern GLCD_FONT GLCD_Font_16x24;
 
 /*-- Global Variables --*/
 
-unsigned char max_temp = 50;  			/* user max temp - 'ideal' temp. - range would be 25-30      */
+unsigned char max_temp = 100;  			/* user max temp - 'ideal' temp. - range would be 25-30      */
 // unsigned char min_moisture_level; - not used as the device currently works off of 'dry' || 'wet'
-unsigned char max_humidity = 70; 		/* user max humidity - 'ideal' humid. - range would be 50-70 */
+unsigned char max_humidity = 100; 		/* user max humidity - 'ideal' humid. - range would be 50-70 */
 
 
 /*-- Function Prototypes --*/
